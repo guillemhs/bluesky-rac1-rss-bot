@@ -1,22 +1,18 @@
-import { BskyAgent } from '@atproto/api';
-import * as dotenv from 'dotenv';
 import { CronJob } from 'cron';
-import * as process from 'process';
-
-dotenv.config();
-
-// Create a Bluesky Agent 
-const agent = new BskyAgent({
-    service: 'https://bsky.social',
-  })
-
+import RssParser  from 'rss-parser';
+import { postWithLinkCard } from "./postWithLinkCard";
 
 async function main() {
-    await agent.login({ identifier: process.env.BLUESKY_USERNAME!, password: process.env.BLUESKY_PASSWORD!})
-    await agent.post({
-        text: "🙂"
-    });
-    console.log("Just posted!")
+  const rssParser = new RssParser();
+  const feed = await rssParser.parseURL('https://yamadashy.github.io/tech-blog-rss-feed/feeds/rss.xml');
+
+  feed.items.forEach(item => {
+    console.log(item.title);
+    console.log(item.link);
+  });
+
+  postWithLinkCard("カンバン方式でチーム開発を改善しました | ONE CAREER Tech Blog", "https://note.com/dev_onecareer/n/n556b04cfc5ee")
+  
 }
 
 main();
