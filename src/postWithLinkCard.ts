@@ -5,13 +5,44 @@ import { getOgImageInfoFromUrl } from "./getOgImageInfoFromUrl";
 
 dotenv.config();
 
+const agent = new BskyAgent({
+    service: 'https://bsky.social',
+})
+
 export async function postWithLinkCard(title: string, url: string) {
     // Blueskyのアカウントに接続
-    const agent = new BskyAgent({
-      service: 'https://bsky.social',
-    })
     await agent.login({ identifier: process.env.BLUESKY_USERNAME!, password: process.env.BLUESKY_PASSWORD!})
   
+    const timeline = await agent.getTimeline({
+        limit: 1
+    });
+    if (!timeline.data?.feed) {
+        console.log('No timeline data');
+        return;
+    }
+    const latestItem = timeline.data.feed[0]
+    let latestPostUri 
+    if (latestItem?.post?.embed?.external !== undefined && latestItem?.post?.embed?.external !== null) {
+        console.log(latestItem?.post?.embed?.external);
+        if (typeof latestItem?.post?.embed?.external === 'object' && 'uri' in latestItem?.post?.embed?.external) {
+          console.log(latestItem?.post?.embed?.external['uri']);
+          latestPostUri = latestItem?.post?.embed?.external['uri']
+        }
+    }
+    console.log(latestPostUri);
+
+
+    // timeline.data.feed.forEach(item => {
+    //     if (item?.post?.embed?.external !== undefined && item?.post?.embed?.external !== null) {
+    //       console.log(item?.post?.embed?.external);
+    //       if (typeof item?.post?.embed?.external === 'object' && 'uri' in item?.post?.embed?.external) {
+    //         console.log(item?.post?.embed?.external['uri']);
+    //       }
+    //     }
+    // });
+    
+    return;
+    
     // ポストの本文を構築
     const richText = new RichText({ 
       text: `${title}\n\n${url}` 
