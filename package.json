@@ -1,0 +1,19 @@
+{
+  "name": "bluesky-bot-for-tech-blog-rss-feed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@atproto/api": "^0.12.5",
+    "cron": "^3.1.7",
+    "dotenv": "^16.4.5",
+    "prosess": "^0.0.3",
+    "typescript": "^5.4.5"
+  }
+}
