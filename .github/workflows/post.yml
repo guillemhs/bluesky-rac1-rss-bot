@@ -3,6 +3,7 @@ on:
   # run it on every 5 minutes
   schedule:
     - cron: "*/5 * * * *"
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
