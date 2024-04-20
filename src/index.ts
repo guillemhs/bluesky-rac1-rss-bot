@@ -9,11 +9,11 @@ dotenv.config();
 async function getLastPostedBlogUrl(agent: BskyAgent): Promise<string | null> {
   // @tech-blog-rss-feed.bsky.social の最新のポストを取得
   const authorFeed = await agent.getAuthorFeed({
-    actor: 'did:plc:umbk2ajkbzqnla2glydjmvvv', // @tech-blog-rss-feed.bsky.social の did
+    actor: process.env.BLUESKY_USERNAME!,
     limit: 1
   });
   if (authorFeed.data?.feed.length === 0) {
-    console.log('No author feed data.');
+    console.log('[INFO] No author feed data.');
     return null;
   }
   const latestItem = authorFeed.data.feed[0]
@@ -78,7 +78,7 @@ async function main() {
 
   // 最後にBlueskyに投稿したブログ記事のURLを取得する
   const lastPostedBlogUrl = await getLastPostedBlogUrl(agent);
-  console.log(`lastPostedBlogUrl: ${lastPostedBlogUrl}`);
+  console.log(`[INFO] lastPostedBlogUrl: ${lastPostedBlogUrl}`);
   if (lastPostedBlogUrl === null) {
     console.log('[ERROR] finished because last posted blog url could not be retrieved.')
     return;
