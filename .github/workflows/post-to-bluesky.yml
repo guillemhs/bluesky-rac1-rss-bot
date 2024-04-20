@@ -4,7 +4,7 @@ on:
     - cron: '*/5 * * * *' # run it on every 5 minutes
   workflow_dispatch: {}
 jobs:
-  tech-blog-rss-feed:
+  postToBluesky:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
