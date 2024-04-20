@@ -96,7 +96,7 @@ async function main() {
   // 新規のRSSフィードをBlueskyに投稿する
   for (const item of newTechBlogRssFeedItems) {
     await postWithLinkCard(agent, item.title, item.url)
-    console.log(`posted ${item.title}`)
+    console.log(`[INFO] posted ${item.title}`)
   };
   console.log("[DONE] posted complete!")
 }
