@@ -5,17 +5,15 @@
 
 ## RSS Feed
 
-### 企業テックブログRSS
+#### 企業テックブログRSS
 
-https://bsky.app/profile/tech-blog-rss-feed.bsky.social
-
+* Bluesky: https://bsky.app/profile/tech-blog-rss-feed.bsky.social
 * Site: https://yamadashy.github.io/tech-blog-rss-feed/
 * RSS: https://yamadashy.github.io/tech-blog-rss-feed/feeds/rss.xml
 
-## ログミーTech
+#### ログミーTech RSS
 
-https://bsky.app/profile/logmi-tech.bsky.social
-
+* Bluesky: https://bsky.app/profile/logmi-tech.bsky.social
 * Site: https://logmi.jp/tech
 * RSS: https://logmi.jp/feed/public-tech.xml
 
