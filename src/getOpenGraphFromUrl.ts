@@ -1,7 +1,7 @@
 import ogs from "open-graph-scraper";
 import sharp from "sharp";
 
-type OgInfo = {
+type OpenGraph = {
   siteUrl: string;
   ogImageUrl: string;
   type: string;
@@ -10,7 +10,7 @@ type OgInfo = {
   imageData: Uint8Array;
 };
 
-export async function getOgImageInfoFromUrl(url: string): Promise<OgInfo> {
+export async function getOpenGraphFromUrl(url: string): Promise<OpenGraph> {
   // open-graph-scraperでURLからOG情報を取得
   const { result } = await ogs({ url: url });
   
