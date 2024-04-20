@@ -1,4 +1,7 @@
-# 企業テックブログRSS（Bluesky Bot）
+![Static Badge](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Static Badge](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+
+# 企業テックブログRSS（Bluesky Bot 🦋）
 
 https://bsky.app/profile/tech-blog-rss-feed.bsky.social
 
