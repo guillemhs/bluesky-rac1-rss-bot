@@ -1,4 +1,4 @@
-name: 'post to Bluesky'
+name: 'Post to Bluesky'
 on:
   schedule:
     - cron: '*/5 * * * *' # run it on every 5 minutes
