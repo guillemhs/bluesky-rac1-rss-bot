@@ -1,14 +1,13 @@
 name: 'post tech-blog-rss-feed'
 on:
-  # run it on every 5 minutes
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/5 * * * *" # run it on every 5 minutes
   workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
