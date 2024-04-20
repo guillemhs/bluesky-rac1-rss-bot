@@ -1,4 +1,4 @@
-# Bluesky 企業テックブログRSS Bot
+# 企業テックブログRSS（Bluesky Bot）
 
 https://bsky.app/profile/tech-blog-rss-feed.bsky.social
 
