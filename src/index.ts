@@ -7,7 +7,7 @@ import { getNewRssFeedItems } from "./getNewRssFeedItems";
 dotenv.config();
 
 async function getLastPostedBlogUrl(agent: BskyAgent): Promise<string | null> {
-  // @tech-blog-rss-feed.bsky.social の最新のポストを取得
+  // 最新のポストを取得
   const authorFeed = await agent.getAuthorFeed({
     actor: process.env.BLUESKY_USERNAME!,
     limit: 1
