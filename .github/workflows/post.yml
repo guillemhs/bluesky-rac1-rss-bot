@@ -1,23 +1,21 @@
-name: 'post tech-blog-rss-feed'
+name: 'post to Bluesky'
 on:
   schedule:
-    - cron: "*/5 * * * *" # run it on every 5 minutes
-  workflow_dispatch:
+    - cron: '*/5 * * * *' # run it on every 5 minutes
+  workflow_dispatch: {}
 jobs:
-  build:
+  postToBluesky:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
           cache: npm
       - run: npm i -g typescript
       - run: npm i -g ts-node
       - run: npm ci # package-lock.json から依存関係のインストール
-      - name: Send post
-        run: npx ts-node src/index.ts
+      - run: npx ts-node src/index.ts
         env:
           BLUESKY_USERNAME: ${{ secrets.BLUESKY_USERNAME }}
           BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
