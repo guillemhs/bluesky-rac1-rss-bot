@@ -19,3 +19,6 @@ jobs:
       - run: npm ci # package-lock.json から依存関係のインストール
       - name: Send post
         run: npx ts-node src/index.ts
+        env:
+          BLUESKY_USERNAME: ${{ secrets.BLUESKY_USERNAME }}
+          BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
