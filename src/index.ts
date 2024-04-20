@@ -80,7 +80,7 @@ async function main() {
   const lastPostedBlogUrl = await getLastPostedBlogUrl(agent);
   console.log(`[INFO] lastPostedBlogUrl: ${lastPostedBlogUrl}`);
   if (lastPostedBlogUrl === null) {
-    console.log('[ERROR] finished because last posted blog url could not be retrieved.')
+    console.error('[ERROR] finished because last posted blog url could not be retrieved.')
     return;
   }
 
