@@ -4,7 +4,7 @@ on:
     - cron: '*/5 * * * *' # run it on every 5 minutes
   workflow_dispatch: {}
 jobs:
-  postToBluesky:
+  tech-blog-rss-feed.bsky.social:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,5 +17,22 @@ jobs:
       - run: npm ci
       - run: npx ts-node src/index.ts
         env:
-          BLUESKY_USERNAME: ${{ secrets.BLUESKY_USERNAME }}
-          BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+          RSS_FEED_URL: https://yamadashy.github.io/tech-blog-rss-feed/feeds/rss.xml
+          BLUESKY_USERNAME: ${{ secrets.TECH_BLOG_RSS_FEED_BLUESKY_USERNAME }}
+          BLUESKY_PASSWORD: ${{ secrets.TECH_BLOG_RSS_FEED_BLUESKY_PASSWORD }}
+  logmi-tech.bsky.social:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm i -g typescript
+      - run: npm i -g ts-node
+      - run: npm ci
+      - run: npx ts-node src/index.ts
+        env:
+          RSS_FEED_URL: https://logmi.jp/feed/public-tech.xml
+          BLUESKY_USERNAME: ${{ secrets.LOGMI_TECH_BLUESKY_USERNAME }}
+          BLUESKY_PASSWORD: ${{ secrets.LOGMI_TECH_BLUESKY_PASSWORD }}
