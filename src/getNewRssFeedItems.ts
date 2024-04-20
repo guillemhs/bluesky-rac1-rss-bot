@@ -6,9 +6,9 @@ type TechBlogRssFeedItem = {
   pubDate: Date;
 }
 
-export async function getNewTechBlogRssFeedItems(lastPostedBlogUrl: string): Promise<Array<TechBlogRssFeedItem>> {
+export async function getNewRssFeedItems(rssFeedUrl: string, lastPostedBlogUrl: string): Promise<Array<TechBlogRssFeedItem>> {
   const rssParser = new RssParser();
-  const feed = await rssParser.parseURL('https://yamadashy.github.io/tech-blog-rss-feed/feeds/rss.xml');
+  const feed = await rssParser.parseURL(rssFeedUrl);
   let newTechBlogRssFeedItems: Array<TechBlogRssFeedItem> = [];
   for (const item of feed.items) {
     if (item.link !== undefined && item.pubDate !== undefined) {

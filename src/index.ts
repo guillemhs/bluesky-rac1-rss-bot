@@ -2,12 +2,12 @@ import { BskyAgent, RichText } from '@atproto/api';
 import * as dotenv from 'dotenv';
 import * as process from 'process';
 import { getOpenGraphFromUrl } from "./getOpenGraphFromUrl";
-import { getNewTechBlogRssFeedItems } from "./getNewTechBlogRssFeedItems";
+import { getNewRssFeedItems } from "./getNewRssFeedItems";
 
 dotenv.config();
 
 async function getLastPostedBlogUrl(agent: BskyAgent): Promise<string | null> {
-  // @tech-blog-rss-feed.bsky.social の最新のポストを取得
+  // 最新のポストを取得
   const authorFeed = await agent.getAuthorFeed({
     actor: process.env.BLUESKY_USERNAME!,
     limit: 1
@@ -70,6 +70,12 @@ async function postWithLinkCard(agent: BskyAgent, title: string, url: string): P
 }
 
 async function main() {
+  console.log(`[INFO] RSS_FEED_URL is ${process.env.RSS_FEED_URL}`)
+  if (process.env.RSS_FEED_URL === undefined) {
+    console.error('[ERROR] finished because RSS_FEED_URL is undefined')
+    return;
+  }
+
   // Blueskyのアカウントに接続
   const agent = new BskyAgent({
     service: 'https://bsky.social',
@@ -85,7 +91,7 @@ async function main() {
   }
 
   // 新規のRSSフィードを取得する
-  const newTechBlogRssFeedItems = await getNewTechBlogRssFeedItems(lastPostedBlogUrl)
+  const newTechBlogRssFeedItems = await getNewRssFeedItems(process.env.RSS_FEED_URL, lastPostedBlogUrl)
   newTechBlogRssFeedItems.sort((a, b) => a.pubDate.getTime() - b.pubDate.getTime());
 
   if (newTechBlogRssFeedItems.length === 0) {
