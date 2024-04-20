@@ -1,0 +1,14 @@
+name: 'post tech-blog-rss-feed'
+on:
+  # run it on every 5 minutes
+  schedule:
+    - cron: "*/5 * * * *"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+    - run: npm ci # package-lock.json から依存関係のインストール
+    - name: Send post
+      run: npx ts-node src/index.ts
