@@ -1,5 +1,5 @@
 {
-  "name": "bluesky-bot-for-tech-blog-rss-feed",
+  "name": "tech-blog-rss-feed.bsky.social",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,13 +10,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
     "@atproto/api": "^0.12.5",
-    "cron": "^3.1.7",
     "dotenv": "^16.4.5",
     "open-graph-scraper": "^6.5.1",
     "prosess": "^0.0.3",
     "rss-parser": "^3.13.0",
-    "sharp": "^0.33.3",
-    "typescript": "^5.4.5"
+    "sharp": "^0.33.3"
   }
 }
