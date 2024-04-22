@@ -70,7 +70,7 @@ async function postWithLinkCard(agent: BskyAgent, title: string, url: string): P
 }
 
 async function main() {
-  console.log(`[INFO] RSS_FEED_URL is ${process.env.RSS_FEED_URL}`)
+  console.log(`[INFO] RSS_FEED_URL: ${process.env.RSS_FEED_URL}`)
   if (process.env.RSS_FEED_URL === undefined) {
     console.error('[ERROR] finished because RSS_FEED_URL is undefined')
     return;
@@ -92,8 +92,6 @@ async function main() {
 
   // 新規のRSSフィードを取得する
   const newTechBlogRssFeedItems = await getNewRssFeedItems(process.env.RSS_FEED_URL, lastPostedBlogUrl)
-  newTechBlogRssFeedItems.sort((a, b) => a.pubDate.getTime() - b.pubDate.getTime());
-
   if (newTechBlogRssFeedItems.length === 0) {
     console.log('[DONE] finished because there are no new feeds.')
     return;
