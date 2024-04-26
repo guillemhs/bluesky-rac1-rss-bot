@@ -1,7 +1,7 @@
 name: 'Post to Bluesky'
 on:
   schedule:
-    - cron: '*/5 * * * *' # run it on every 5 minutes
+    - cron: '0 * * * *' # run it on every 1 hour
   workflow_dispatch: {}
 jobs:
   postToBluesky:

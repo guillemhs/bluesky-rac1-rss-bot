@@ -33,21 +33,23 @@ async function getLastPostedBlogUrl(agent: BskyAgent): Promise<string | null> {
 }
 
 async function postWithLinkCard(agent: BskyAgent, title: string, url: string): Promise<void> {  
-  // ポストの本文を構築
-  const richText = new RichText({ 
-    text: `${title}\n\n${url}` 
-  })
-  await richText.detectFacets(agent);
-  
   // リンクカードとしてポストに埋め込む情報を構築
   const openGraph = await getOpenGraphFromUrl(url);
-  const uploadedImage = await agent.uploadBlob(openGraph.imageData, {
-    encoding: "image/jpeg",
-  });
-  const embed = {
-    $type: "app.bsky.embed.external",
-    external: {
+  var embedExternal;
+  if (openGraph.imageData.byteLength === 0) {
+    embedExternal = {
       uri: openGraph.siteUrl,
+      title: openGraph.title,
+      description: openGraph.description,
+    }
+  } else {
+    const uploadedImage = await agent.uploadBlob(openGraph.imageData, {
+      encoding: "image/jpeg",
+    });
+    embedExternal = {
+      uri: openGraph.siteUrl,
+      title: openGraph.title,
+      description: openGraph.description,
       thumb: {
         $type: "blob",
         ref: {
@@ -56,16 +58,16 @@ async function postWithLinkCard(agent: BskyAgent, title: string, url: string): P
         mimeType: uploadedImage.data.blob.mimeType,
         size: uploadedImage.data.blob.size,
       },
-      title: openGraph.title,
-      description: openGraph.description,
-    },
+    }
   }
-    
+
   // ポストを投稿
   await agent.post({
-    text: richText.text,
-    facets: richText.facets,
-    embed: embed,
+    text: title,
+    embed: {
+      $type: "app.bsky.embed.external",
+      external: embedExternal,
+    },
   });
 }
 
@@ -98,9 +100,15 @@ async function main() {
   }
 
   // 新規のRSSフィードをBlueskyに投稿する
+  var counter = 0
   for (const item of newTechBlogRssFeedItems) {
     await postWithLinkCard(agent, item.title, item.url)
     console.log(`[INFO] posted ${item.title}`)
+    counter += 1
+    if (counter >= 5) {
+      console.log("[DONE] 5件ポストしたので終了")
+      break;
+    }
   };
   console.log("[DONE] posted complete!")
 }
