@@ -33,31 +33,42 @@ async function getLastPostedBlogUrl(agent: BskyAgent): Promise<string | null> {
 }
 
 async function postWithLinkCard(agent: BskyAgent, title: string, url: string): Promise<void> {  
-  // リンクカードとしてポストに埋め込む情報を構築
-  const openGraph = await getOpenGraphFromUrl(url);
   var embedExternal;
-  if (openGraph.imageData.byteLength === 0) {
-    embedExternal = {
-      uri: openGraph.siteUrl,
-      title: openGraph.title,
-      description: openGraph.description,
-    }
-  } else {
-    const uploadedImage = await agent.uploadBlob(openGraph.imageData, {
-      encoding: "image/jpeg",
-    });
-    embedExternal = {
-      uri: openGraph.siteUrl,
-      title: openGraph.title,
-      description: openGraph.description,
-      thumb: {
-        $type: "blob",
-        ref: {
-          $link: uploadedImage.data.blob.ref.toString(),
+  // リンクカードとしてポストに埋め込む情報を構築
+  try {
+    const openGraph = await getOpenGraphFromUrl(url);
+    if (openGraph.imageData.byteLength === 0) {
+      // サムネイル画像なし
+      embedExternal = {
+        uri: url,
+        title: openGraph.title,
+        description: openGraph.description,
+      }
+    } else {
+      // サムネイル画像あり
+      const uploadedImage = await agent.uploadBlob(openGraph.imageData, {
+        encoding: "image/jpeg",
+      });
+      embedExternal = {
+        uri: url,
+        title: openGraph.title,
+        description: openGraph.description,
+        thumb: {
+          $type: "blob",
+          ref: {
+            $link: uploadedImage.data.blob.ref.toString(),
+          },
+          mimeType: uploadedImage.data.blob.mimeType,
+          size: uploadedImage.data.blob.size,
         },
-        mimeType: uploadedImage.data.blob.mimeType,
-        size: uploadedImage.data.blob.size,
-      },
+      }
+    }
+  } catch { 
+    console.log(`[ERROR] OG情報の取得に失敗. ${url}`)
+    embedExternal = {
+      uri: url,
+      title: title,
+      description: '',
     }
   }
 
@@ -94,6 +105,7 @@ async function main() {
 
   // 新規のRSSフィードを取得する
   const newTechBlogRssFeedItems = await getNewRssFeedItems(process.env.RSS_FEED_URL, lastPostedBlogUrl)
+  console.log(`[INFO] 新規RSSフィードの件数: ${newTechBlogRssFeedItems.length}`)
   if (newTechBlogRssFeedItems.length === 0) {
     console.log('[DONE] finished because there are no new feeds.')
     return;
