@@ -114,8 +114,12 @@ async function main() {
   // 新規のRSSフィードをBlueskyに投稿する
   var counter = 0
   for (const item of newTechBlogRssFeedItems) {
-    await postWithLinkCard(agent, item.title, item.url)
-    console.log(`[INFO] posted ${item.title}`)
+    try {
+      await postWithLinkCard(agent, item.title, item.url)
+      console.log(`[DONE] posted ${item.url}`)
+    } catch {
+      console.log(`[ERROR] ポストに失敗. ${item.url}`)
+    }
     counter += 1
     if (counter >= 5) {
       console.log("[DONE] 5件ポストしたので終了")
