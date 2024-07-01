@@ -1,0 +1,23 @@
+name: 'post to @logmi-tech.bsky.social'
+on:
+  schedule:
+    - cron: '0 * * * *' # run it on every 1 hour
+  workflow_dispatch: {}
+jobs:
+  post-to-bluesky:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm i -g typescript
+      - run: npm i -g ts-node
+      - run: npm ci
+      - name: logmi-tech.bsky.social
+        run: npx ts-node src/index.ts
+        env:
+          RSS_FEED_URL: https://logmi.jp/feed/public-tech.xml
+          BLUESKY_USERNAME: logmi-tech.bsky.social
+          BLUESKY_PASSWORD: ${{ secrets.LOGMI_TECH_BLUESKY_PASSWORD }}
