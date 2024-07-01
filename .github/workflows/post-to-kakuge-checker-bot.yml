@@ -1,0 +1,23 @@
+name: 'post to @kakuge-checker-bot.bsky.social'
+on:
+  schedule:
+    - cron: '0 * * * *' # run it on every 1 hour
+  workflow_dispatch: {}
+jobs:
+  post-to-bluesky:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm i -g typescript
+      - run: npm i -g ts-node
+      - run: npm ci
+      - name: kakuge-checker-bot.bsky.social
+        run: npx ts-node src/index.ts
+        env:
+          RSS_FEED_URL: https://kakuge-checker.com/topic/rss.xml
+          BLUESKY_USERNAME: kakuge-checker-bot.bsky.social
+          BLUESKY_PASSWORD: ${{ secrets.KAKUGE_CHECKER_BOT_BLUESKY_PASSWORD }}
