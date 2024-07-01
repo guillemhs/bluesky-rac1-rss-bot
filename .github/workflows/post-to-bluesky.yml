@@ -27,3 +27,9 @@ jobs:
           RSS_FEED_URL: https://logmi.jp/feed/public-tech.xml
           BLUESKY_USERNAME: logmi-tech.bsky.social
           BLUESKY_PASSWORD: ${{ secrets.LOGMI_TECH_BLUESKY_PASSWORD }}
+      - name: kakuge-checker-bot.bsky.social
+        run: npx ts-node src/index.ts
+        env:
+          RSS_FEED_URL: https://kakuge-checker.com/topic/rss.xml
+          BLUESKY_USERNAME: kakuge-checker-bot.bsky.social
+          BLUESKY_PASSWORD: ${{ secrets.KAKUGE_CHECKER_BOT_BLUESKY_PASSWORD }}
