@@ -112,6 +112,7 @@ async function main() {
   }
 
   // 新規のRSSフィードをBlueskyに投稿する
+  const limit = 5
   var counter = 0
   for (const item of newTechBlogRssFeedItems) {
     try {
@@ -121,8 +122,8 @@ async function main() {
       console.log(`[ERROR] ポストに失敗. ${item.url}`)
     }
     counter += 1
-    if (counter >= 5) {
-      console.log("[DONE] 5件ポストしたので終了")
+    if (counter >= limit) {
+      console.log(`[DONE] ${limit}件ポストしたので終了`)
       break;
     }
   };
