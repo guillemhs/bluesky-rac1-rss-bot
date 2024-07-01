@@ -6,7 +6,11 @@ type TechBlogRssFeedItem = {
 }
 
 export async function getNewRssFeedItems(rssFeedUrl: string, lastPostedBlogUrl: string): Promise<Array<TechBlogRssFeedItem>> {
-  const rssParser = new RssParser();
+  const rssParser = new RssParser({
+    headers: {
+      Accept: 'application/rss+xml, application/xml',
+    },
+  });
   const feed = await rssParser.parseURL(rssFeedUrl);
 
   // 新着記事を抽出する
