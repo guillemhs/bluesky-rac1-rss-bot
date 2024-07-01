@@ -1,10 +1,10 @@
-name: 'Post to Bluesky'
+name: 'post to @tech-blog-rss-feed.bsky.social'
 on:
   schedule:
     - cron: '0 * * * *' # run it on every 1 hour
   workflow_dispatch: {}
 jobs:
-  postToBluesky:
+  post-to-bluesky:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,15 +21,3 @@ jobs:
           RSS_FEED_URL: https://yamadashy.github.io/tech-blog-rss-feed/feeds/rss.xml
           BLUESKY_USERNAME: tech-blog-rss-feed.bsky.social
           BLUESKY_PASSWORD: ${{ secrets.TECH_BLOG_RSS_FEED_BLUESKY_PASSWORD }}
-      - name: logmi-tech.bsky.social
-        run: npx ts-node src/index.ts
-        env:
-          RSS_FEED_URL: https://logmi.jp/feed/public-tech.xml
-          BLUESKY_USERNAME: logmi-tech.bsky.social
-          BLUESKY_PASSWORD: ${{ secrets.LOGMI_TECH_BLUESKY_PASSWORD }}
-      - name: kakuge-checker-bot.bsky.social
-        run: npx ts-node src/index.ts
-        env:
-          RSS_FEED_URL: https://kakuge-checker.com/topic/rss.xml
-          BLUESKY_USERNAME: kakuge-checker-bot.bsky.social
-          BLUESKY_PASSWORD: ${{ secrets.KAKUGE_CHECKER_BOT_BLUESKY_PASSWORD }}
