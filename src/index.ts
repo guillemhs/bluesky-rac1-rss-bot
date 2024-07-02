@@ -75,8 +75,9 @@ async function postWithLinkCard(agent: BskyAgent, title: string, url: string): P
   // ポストを投稿
   await agent.post({
     text: title,
+    langs: ['ja'],
     embed: {
-      $type: "app.bsky.embed.external",
+      $type: 'app.bsky.embed.external',
       external: embedExternal,
     },
   });
