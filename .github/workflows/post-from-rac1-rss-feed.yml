@@ -1,4 +1,4 @@
-name: 'post to @tech-blog-rss-feed.bsky.social'
+name: 'post to @rac1rss.bsky.social'
 on:
   schedule:
     - cron: '*/5 * * * *' # run it on every 5 minutes
@@ -15,7 +15,7 @@ jobs:
       - run: npm i -g typescript
       - run: npm i -g ts-node
       - run: npm ci
-      - name: tech-blog-rss-feed.bsky.social
+      - name: rac1rss.bsky.social
         run: npx ts-node src/index.ts
         env: 
           RSS_FEED_URL: https://www.rac1.cat/rss/home.xml
